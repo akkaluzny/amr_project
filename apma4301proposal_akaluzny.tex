@@ -1,0 +1,46 @@
+\documentclass[11pt]{article}
+\usepackage{url,amsmath}
+\title{E4301 Project Proposal}
+\author{Andrew Kaluzny (akk2141)}
+\date{September 29, 2014}
+
+\begin{document}
+\maketitle
+
+\section*{Problem Choice and Justification}
+For my project, I am interested in exploring adaptive mesh refinement.
+Adaptive mesh refinement can be used to effectively handle problems that require modelling on varying scales by increasing mesh resolution only where and when it is needed. This allows for substantial performance gains when the alternative would require using a very fine mesh everywhere.
+
+In particular, I would like to look at adaptive mesh refinement as applied to tsunami propagation. 
+The combination of large scales (vast swaths of ocean) and small scales (harbours and other coastal features) make tsunami propagation a useful problem with which to explore mesh refinement. 
+Potential gains in performance of tsunami models have useful applications, including real-time predictions that can be used for evacuating coastal regions and the possibility of running many simulations over varying initial conditions to create a probabilistic model of the impact of future tsunamis \cite{leveque11}.
+
+My interest in this topic began after hearing a talk from Professor Kyle Mandli earlier this semester. I have been communicating with Professor Mandli about a useful direction I could take this project in--possibly involving implementing my work as variations on the adaptive mesh refinement code in Clawpack (\url{www.clawpack.org}).
+
+\section*{Mathematical Model}
+Tsunamis have been successfully modelled with the shallow water equations, which in 2-D can be given as
+\begin{equation}
+\label{eq:mass}
+h_t + (hu)_x + (hv)_y = 0
+\end{equation}
+\begin{equation}
+\label{eq:x_momentum}
+(hu)_t + (hu^2 + \tfrac{1}{2	}gh^2)_x + (huv)_y = -ghB_x
+\end{equation}
+\begin{equation}
+\label{eq:y_momentum}
+(hv)_t + (hv^2 + \tfrac{1}{2	}gh^2)_y + (huv)_x = -ghB_y
+\end{equation}
+where $h(x,y,t)$ is the height of the water, $u(x,y,t)$ and $v(x,y,t)$ are the velocities in the x and y directions respectively, $g$ is the gravitational acceleration, and $B(x,y)$ is the depth of the sea floor relative to the mean sea level \cite{leveque11}.
+Equation~\eqref{eq:mass} gives mass conservation, while~\eqref{eq:x_momentum} and~\eqref{eq:y_momentum} govern the momentum in the x and y directions, respectively.
+
+The shallow water equations inherently treat the ocean as a single layer, with the action of interest taking place horizontally and vertical velocity treated as negligible. In the form shown above, they also do not take into account Coriolis and various drag forces.
+
+
+\begin{thebibliography}{9}
+\bibitem{leveque11}
+	Randall J. LeVeque, David L. George, and Marsha J. Berger.
+	\emph{Tsunami modelling with adaptively refined finite volume methods}.
+	2011.
+\end{thebibliography}
+\end{document}
