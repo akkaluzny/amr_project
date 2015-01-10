@@ -11,7 +11,7 @@
 \maketitle
 
 \section*{Introduction}
-Adaptive mesh refinement (AMR) allows for efficient handling of problems
+Adaptive mesh refinement (AMR) allows for the efficient handling of problems
 that involve multiple scales by increasing mesh resolution only when and
 where it is needed. This provides the potential for substantial performance
 gains, as a coarser mesh can be used for the parts of the problem where it
@@ -19,7 +19,7 @@ is appropriate. These performance gains offer the possibility not just of
 more convenient modelling, or higher accuracy solutions in the same time
 frame, but also opening new uses for numerical models (such as quickly
 running a model over a distribution of initial parameters that capture
-uncertainty in their values, and using the outcome to see find the uncertainty
+uncertainty in their values, and using the outcome to find the uncertainty
 in the results).
 
 AMR brings a new set of parameters to a numerical model, including how 
@@ -32,12 +32,12 @@ refinements, the larger the refined regions must be to ensure that any
 interesting feature that needs the higher resolution doesn't move somewhere
 else before the next refinement step is able to reposition the finer mesh
 appropriately. It is this relationship I am interesting in exploring, and
-its effect on running time of the model as a whole. If the refinement process
+its effect on the run time of the model as a whole. If the refinement process
 is particularly costly, increasing the time between those steps is advantageous,
 but it is balanced by the need to increase the size of the refined regions.
 
 To explore this trade-off, I used the Clawpack software,
-and its AMR implementation AMRClaw (see \cite{clawpack}), 
+and its AMR implementation, AMRClaw (see \cite{clawpack}), 
 to look at two sample problems and how
 their solutions react to changing the time between refinement and the buffer
 added around refined regions to counteract that time.
@@ -45,8 +45,7 @@ added around refined regions to counteract that time.
 \section*{Adaptive Mesh Refinement in Clawpack}
 Clawpack is a suite of software tools for solving hyperbolic systems of
 PDEs using finite volume methods. The use of finite volume methods make it
-particularly suited to systems of conservation laws, and one of its uses
-is for modelling storm surges and tsunamis (where the differing scales 
+particularly suited to systems of conservation laws, for example modelling storm surges and tsunamis (where the differing scales 
 between the expanse of the ocean and details of harbors make AMR a useful
 tool).
 
@@ -84,8 +83,8 @@ Though the advection problem has an easy analytical solution, the gas problem
 does not. Thus for computing errors I used a run of the problem on which a 
 single grid at the finest level was used as an approximate ``true'' solution.
 This choice is particularly suited to AMR, where the goal is effectively to
-get a solution like the one using a fine grid everywhere, without having to 
-actually do so. Comparing solutions when differing grids are involved is not
+get a solution like the one using a fine grid everywhere, without having 
+actually done so. Comparing solutions when differing grids are involved is not
 as straightforward as when a single uniform grid is involved, but AMRClaw 
 allows one to specify ``gauge'' points where the solution will be logged
 independent of the actual grid, interpolating as necessary.
@@ -111,8 +110,8 @@ various grids.}
 
 \section*{Regridding in a Simple Advection Problem}
 In the simple advection example provided in AMRClaw, a square region moves
-towards the upper right corner of a square domain, wraps around the space
-a bit, and returns to its original position at time $t=2$. For a reference
+towards the upper right corner of a square domain (periodic in both the 
+x and y directions), returning to its original position at time $t=2$. For a reference
 solution, I used a grid with 200 cells on each side and no refinement
 (see Figure~\ref{fig:advec_base}). The
 AMR solutions all used a grid that started at 50 cells each side, and had
@@ -155,7 +154,7 @@ The plateau that begins to form around an interval of 8 could indicate a limit
 to the ``badness'' of letting things escape from finer grids. Once the interval
 between regridding steps becomes large enough, most everything of interest
 may leave the refined region and become lost in the coarser grids. The point
-at which this occurs likely depends of the specifics of the problem, but in
+at which this occurs likely depends on the specifics of the problem, but in
 this advection problem, where everything moves at a constant rate and the 
 regions of interest are rectilinear and at a fixed angle to the motion of
 the square, we might expect a relatively clear and well-defined plateau
@@ -230,7 +229,7 @@ solution) over 60\% of the domain (and that that 60\% is focused around
 the areas of interest). This may in part be due to the nature of the error
 estimate being used, combined with the specifics of the problem. Since the
 boundary of the square is ideally a step function, any slight difference
-in position or dispersion of the boundary could lead to very large errors,
+in position or diffusion of the boundary could lead to very large errors,
 and since only 25 points are being sampled from, this may not be enough to 
 wash out those with the low errors of the vast areas that do agree.
 
@@ -264,7 +263,7 @@ when combined with the buffer width.
 
 \begin{figure}[!htb]
 \centering
-\caption{Timing information for runs of the advection problem, with the
+\caption{Timing information for runs of the advection problem,
 with the number of buffer cells equal to the regrid interval. Note that
 at their slowest, the AMR runs take approximately 40\% of the time of the
 reference solution.}
@@ -339,7 +338,7 @@ even more dominated by the time spent on the grids (likely due to the more
 complex nature of computing the flux between cells, compared to the relatively
 trivial advection problem), but otherwise the overall direction and 
 potential to plateau for each
-quantitys is the same as the interval/buffer increases (see 
+quantity is the same as the interval/buffer increases (see 
 Figure~\ref{fig:time_euler}).
 
 \begin{figure}[!htb]
